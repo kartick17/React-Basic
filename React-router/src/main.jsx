@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Profiler } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
@@ -8,6 +8,8 @@ import About from './Components/About/About'
 import Contact from './Components/Contact/Contact'
 import User from './Components/User/User'
 import Github, { githubLoderData } from './Components/Github/Github'
+import Login from './Components/Login/Login'
+import Profile from './Components/Profile/Profile'
 
 const route = createBrowserRouter([
   {
@@ -34,6 +36,14 @@ const route = createBrowserRouter([
         path: 'github',
         element: <Github />,
         loader: githubLoderData,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
       },
     ],
   },
