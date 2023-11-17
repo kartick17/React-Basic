@@ -46,7 +46,7 @@ const pizzaData = [
 
 function App() {
   return (
-    <div className='contain'>
+    <div className='w-[130rem] flex mx-auto flex-col gap-20 items-center mt-5'>
       <Header />
       <Menu />
       <Footer />
@@ -56,21 +56,23 @@ function App() {
 
 function Header() {
   return (
-    <header className='header'>
-      <h1>Fast React Pizza Co.</h1>
+    <header className='self-stretch header'>
+      <h1 className='text-[#edc84b] uppercase text-center font-light text-8xl tracking-widest relative w-full block'>
+        Fast React Pizza Co.
+      </h1>
     </header>
   )
 }
 
 function Menu() {
   return (
-    <main className='menu'>
-      <h2>Our menu</h2>
+    <main className='flex flex-col items-center gap-16'>
+      <h2 className='inline-block py-4 border-y-2 border-stone-800 text-3xl uppercase tracking-widest font-medium'>Our menu</h2>
       {
         pizzaData.length > 0 ?
           <>
-            <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
-            <ul className='pizzas'>
+            <p className='text-2xl text-center w-3/4'>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
+            <ul className='grid grid-cols-2 gap-20'>
               {pizzaData.map(pizza => <Pizza pizza={pizza} key={pizza.name} />)}
             </ul>
           </>
@@ -91,16 +93,16 @@ function Footer() {
     <footer>
       {isOpen ? (
         <Order closeHour={closeHour} />
-      ) : <p className='text-xl'>We & apos;re happy to welcome you between {openHour}:00 and {closeHour}:00</p>}
+      ) : <p className='text-2xl'>We & apos;re happy to welcome you between {openHour}:00 and {closeHour}:00</p>}
     </footer >
   )
 }
 
 function Order({ closeHour }) {
   return (
-    <div className='order'>
-      <p className='text-xl'>We&apos;re open until {closeHour}:00. Come visit us or order online.</p>
-      <button className='btn'>Order</button>
+    <div className='flex flex-col items-center gap-10'>
+      <p className='text-2xl'>We&apos;re open until {closeHour}:00. Come visit us or order online.</p>
+      <button className='text-2xl font-medium bg-[#edc84b] py-6 px-12 cursor-pointer transition-all hover:bg-[#e9bb24]'>Order</button>
     </div>
   )
 }
@@ -109,12 +111,12 @@ function Pizza({ pizza }) {
   const { name, ingredients, photoName, price, soldOut } = pizza;
 
   return (
-    <li className={`pizza ${soldOut ? 'sold-out' : ''}`} >
-      <img src={photoName} alt={name} />
-      <div>
-        <h3>{name}</h3>
-        <p>{ingredients}</p>
-        <span>{soldOut ? 'Sold Out' : price}</span>
+    <li className={`flex gap-12 self-start ${soldOut ? 'sold-out' : ''}`} >
+      <img className='w-48 self-start aspect-square' src={photoName} alt={name} />
+      <div className='flex flex-col gap-3 py-2'>
+        <h3 className='text-4xl font-normal'>{name}</h3>
+        <p className='text-2xl font-light italic mb-auto'>{ingredients}</p>
+        <span className='block text-2xl'>{soldOut ? 'Sold Out' : price}</span>
       </div>
     </li >
   )
