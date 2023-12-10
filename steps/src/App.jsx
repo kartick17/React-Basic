@@ -24,19 +24,47 @@ function App() {
       {isOpen && (<div className="flex justify-center mt-20">
         <div className="bg-stone-100 w-[35rem] py-8 px-4 flex flex-col gap-12 rounded-lg text-stone-700">
           <div className="flex justify-around text-xl">
-            <div className={`px-4 py-2 rounded-3xl ${step >= 1 ? 'bg-indigo-600 text-white' : 'bg-stone-300'} `}>1</div>
-            <div className={`px-4 py-2 rounded-3xl ${step >= 2 ? 'bg-indigo-600 text-white' : 'bg-stone-300'} `}>2</div>
-            <div className={`px-4 py-2 rounded-3xl ${step >= 3 ? 'bg-indigo-600 text-white' : 'bg-stone-300'} `}>3</div>
+            <StepNo step={step} currentStep={1} />
+            <StepNo step={step} currentStep={2} />
+            <StepNo step={step} currentStep={3} />
           </div>
-          <h2 className="m-auto text-xl font-semibold">Step {step}: {messages[step - 1]}</h2>
+          <StepMessage step={step}>{messages[step - 1]}</StepMessage>
           <div className="flex justify-around">
-            <button className="bg-indigo-600 px-4 py-1 rounded-2xl text-white font-medium" onClick={handlePrevious}>Previous</button>
-            <button className="bg-indigo-600 px-4 py-1 rounded-2xl text-white font-medium" onClick={handleNext}>Next</button>
+            <Button bgColor='bg-indigo-600' textColor='text-white' onclick={handlePrevious}>
+              <span>👈</span> Previous
+            </Button>
+            <Button bgColor='bg-indigo-600' textColor='text-white' onclick={handleNext}>
+              Next <span>👉</span>
+            </Button>
           </div>
         </div>
-      </div>)
+      </div >)
       }
     </>
+  )
+}
+
+function StepNo({ step, currentStep }) {
+  return (
+    <div className={`px-4 py-2 rounded-3xl ${step >= currentStep ? 'bg-indigo-600 text-white' : 'bg-stone-300'} `}>
+      {currentStep}
+    </div>
+  )
+}
+
+function StepMessage({ step, children }) {
+  return (
+    <div className="m-auto text-center text-xl font-semibold">
+      <h2>Step {step}</h2> {children}
+    </div>
+  )
+}
+
+function Button({ textColor, bgColor, children, onclick }) {
+  return (
+    <button className={`${textColor} ${bgColor} px-4 py-1 rounded-2xl font-medium`} onClick={onclick}>
+      {children}
+    </button>
   )
 }
 
