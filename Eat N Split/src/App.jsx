@@ -39,18 +39,28 @@ function App() {
     setShowAddFriend(false)
   }
 
+  const handleAddFriend = (friend) => {
+    setFriends(friends => [...friends, friend])
+    setShowAddFriend(false)
+  }
+
+  const handleSplitBill = (value) => {
+    setFriends(friends.map(friend => friend.id === selectedFriend.id ? { ...friend, balance: friend.balance + value } : friend))
+    setSelectedFriend(null)
+  }
+
   return (
     <div className='flex justify-between mt-24 mx-40 text-stone-700'>
       <div>
         <FriendList friends={friends} selectedFriend={selectedFriend} onSelection={handleSelectedFriend} />
-        {showAddFriend && <FormAddFriend />}
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
         <div className='flex justify-end mt-6 mr-6'>
-          <button className='bg-[#f98900c7] px-6 py-2 rounded-lg text-md font-semibold' onClick={handleToggleAddFriend}>
+          <button className='bg-[#f98900e0] px-6 py-2 rounded-lg text-md font-semibold' onClick={handleToggleAddFriend}>
             {showAddFriend ? 'Close' : 'Add Friend'}
           </button>
         </div>
       </div>
-      {selectedFriend && <FormSplitBill />}
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} onSplitBill={handleSplitBill} />}
     </div >
   )
 }
