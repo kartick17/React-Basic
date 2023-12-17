@@ -1,13 +1,13 @@
 import React from 'react'
 import Friend from './Friend'
 
-function FriendList() {
+function FriendList({ friends, selectedFriend, onSelection }) {
   return (
-    <div className='flex flex-col'>
-      <Friend />
-      <Friend />
-      <Friend />
-    </div>
+    <ul className='flex flex-col'>
+      {friends.map((friend) => (
+        <Friend key={friend.id} friend={friend} selectedFriend={selectedFriend} onSelection={onSelection} />
+      ))}
+    </ul>
   )
 }
 

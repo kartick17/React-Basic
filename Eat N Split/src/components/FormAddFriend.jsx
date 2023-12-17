@@ -12,7 +12,7 @@ function FormAddFriend() {
         <input type="text" className='w-60 p-2 border-pink-100 border-2 rounded-md outline-none text-md' />
       </div>
       <div className='flex justify-end'>
-        <button className='w-60 bg-[#f98900c7] py-2 rounded-lg font-semibold text-lg'>Add</button>
+        <button className='w-60 bg-[#f98900c7] py-2 rounded-lg font-semibold text-md'>Add</button>
       </div>
     </div>
   )

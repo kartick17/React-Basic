@@ -24,7 +24,7 @@ function FormSplitBill() {
         </select>
       </div>
       <div className='flex justify-end'>
-        <button className='mt-4 w-40 bg-[#f98900c7] py-2 rounded-lg font-semibold text-lg'>Split Bill</button>
+        <button className='mt-4 w-40 bg-[#f98900c7] py-2 rounded-lg font-semibold text-md'>Split Bill</button>
       </div>
     </div>
   )
