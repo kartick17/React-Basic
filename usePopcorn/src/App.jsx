@@ -1,7 +1,5 @@
-import React from 'react'
-import Navbar from './components/Navbar'
+import React, { useState } from 'react'
 import './App.css'
-import Main from './components/Main';
 
 const tempMovieData = [
   {
@@ -50,6 +48,8 @@ const tempWatchedData = [
   },
 ];
 
+const average = (arr) =>
+  arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function App() {
   return (
@@ -59,5 +59,179 @@ function App() {
     </div>
   )
 }
+
+function Navbar() {
+  return (
+    <div className='flex justify-between bg-primary h-30 px-6 py-2 w-full rounded-md'>
+      <Logo />
+      <Search />
+      <NumResult />
+    </div>
+  )
+}
+
+function Logo() {
+  return (
+    <div className='flex items-center'>
+      <span role='img'>🍿</span>
+      <h1 className='flex font-semibold text-white'>usePopcorn</h1>
+    </div>
+  )
+}
+
+function Search() {
+  const [query, setQuery] = useState("")
+  return (
+    <>
+      <input type="text" placeholder='Search movies...'
+        className='flex items-center bg-primary-light text-sm py-1 px-4 rounded w-96 outline-none'
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+    </>
+  )
+}
+
+function NumResult() {
+  return (
+    <div className='flex items-center text-xs text-white'>Found 2 results</div>
+  )
+}
+
+function Main() {
+  const [watched, setWatched] = useState(tempWatchedData)
+
+  return (
+    <div className='flex gap-4 px-6 text-xs mx-auto h-[calc(100vh-6rem)]'>
+      <MovieBox />
+      <WatchBox watched={watched} />
+    </div>
+  )
+}
+
+function MovieBox() {
+  const [movies, setMovies] = useState(tempMovieData)
+  const [isOpen1, setIsOpen1] = useState(false)
+
+  return (
+    <div className='bg-background-500 rounded-md relative w-[25rem]'>
+      <button className='absolute right-2 top-2 w-6 h-6 rounded-full bg-[#212529] pb-1 text-[1.4rem]'
+        onClick={() => setIsOpen1(open => !open)}>
+        {isOpen1 ? '-' : '+'}
+      </button>
+      {isOpen1 && <MovieList movies={movies} />}
+    </div>
+  )
+}
+
+function MovieList({ movies }) {
+  return (
+    <ul>
+      {movies?.map(movie => <Movie movie={movie} key={movie.imdbID} />)}
+    </ul>
+  )
+}
+
+
+function Movie({ movie }) {
+  return (
+    <li className='flex items-center px-6 py-3 gap-4 border-b border-background-100'>
+      <img src={movie.Poster} alt={`${movie.Title} poster`} className='h-10 w-7' />
+      <div>
+        <h3 className='font-semibold text-sm'>Inception</h3>
+        <p>
+          <span className='text-xs mr-2'>🗓</span>
+          <span className='text-sm'>2010</span>
+        </p>
+      </div>
+    </li>
+  )
+}
+
+function WatchBox() {
+  const [isOpen2, setIsOpen2] = useState(false)
+  const [watched, setWatched] = useState(tempWatchedData)
+
+  return (
+    <div className='bg-background-500 rounded-md relative w-[25rem]'>
+      <button className='absolute right-2 top-2 w-6 h-6 rounded-full bg-[#212529] pb-1 text-[1.4rem]'
+        onClick={() => setIsOpen2(open => !open)}>
+        {isOpen2 ? '-' : '+'}
+      </button>
+      {isOpen2 && <>
+        <Summery watched={watched} />
+        <WatchList watched={watched} />
+      </>}
+    </div>
+  )
+}
+
+function WatchList({ watched }) {
+  return (
+    <ul>
+      {watched.map((movie) => <WatchedMovie key={movie.imdbID} movie={movie} />)}
+    </ul>
+  )
+
+
+}
+
+function Summery({ watched }) {
+  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
+  const avgUserRating = average(watched.map((movie) => movie.userRating));
+  const avgRuntime = average(watched.map((movie) => movie.runtime));
+
+
+  return (
+    <div className='flex flex-col px-8 py-3 gap-2 bg-background-100 rounded-md'>
+      <h2 className='uppercase font-semibold text-[.8rem]'>Movies you watched</h2>
+      <div className='flex justify-between'>
+        <p className='flex gap-1'>
+          <span>#️⃣</span>
+          <span>{watched.length} movies</span>
+        </p>
+        <p className='flex gap-1'>
+          <span>⭐️</span>
+          <span>{avgImdbRating}</span>
+        </p>
+        <p className='flex gap-1'>
+          <span>🌟</span>
+          <span>{avgUserRating}</span>
+        </p>
+        <p className='flex gap-1'>
+          <span>⏳</span>
+          <span>{avgRuntime} min</span>
+        </p>
+      </div>
+    </div >
+  )
+}
+
+function WatchedMovie({ movie }) {
+  return (
+    <li className='flex items-center px-6 py-3 gap-4 border-b border-background-100'>
+      <img src={movie.Poster} alt={`${movie.Title} poster`} className='h-10 w-7' />
+      <div className='flex flex-col gap-2 w-3/5'>
+        <h3 className='font-semibold text-sm'>{movie.Title}</h3>
+        <div className='flex justify-between'>
+          <p className='flex gap-1'>
+            <span>⭐️</span>
+            <span>{movie.imdbRating}</span>
+          </p>
+          <p className='flex gap-1'>
+            <span>🌟</span>
+            <span>{movie.userRating}</span>
+          </p>
+          <p className='flex gap-1'>
+            <span>⏳</span>
+            <span>{movie.runtime} min</span>
+          </p>
+        </div>
+      </div>
+    </li>
+  )
+}
+
+
 
 export default App
