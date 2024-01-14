@@ -120,7 +120,7 @@ function Main({ children }) {
 }
 
 function Box({ children }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   return (
     <div className='bg-background-500 rounded-md relative w-[25rem]'>
