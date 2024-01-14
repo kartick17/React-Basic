@@ -52,20 +52,33 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function App() {
+  const [movies, setMovies] = useState(tempMovieData)
+  const [watched, setWatched] = useState(tempWatchedData)
+
   return (
     <div className='flex flex-col gap-4'>
-      <Navbar />
-      <Main />
+      <Navbar>
+        <Search />
+        <NumResult movies={movies} />
+      </Navbar>
+      <Main>
+        <Box>
+          <MovieList movies={movies} />
+        </Box>
+        <Box>
+          <Summery watched={watched} />
+          <WatchList watched={watched} />
+        </Box>
+      </Main>
     </div>
   )
 }
 
-function Navbar() {
+function Navbar({ children }) {
   return (
     <div className='flex justify-between bg-primary h-30 px-6 py-2 w-full rounded-md'>
       <Logo />
-      <Search />
-      <NumResult />
+      {children}
     </div>
   )
 }
@@ -92,34 +105,30 @@ function Search() {
   )
 }
 
-function NumResult() {
+function NumResult({ movies }) {
   return (
-    <div className='flex items-center text-xs text-white'>Found 2 results</div>
+    <div className='flex items-center text-xs text-white'>Found {movies.length} results</div>
   )
 }
 
-function Main() {
-  const [watched, setWatched] = useState(tempWatchedData)
-
+function Main({ children }) {
   return (
     <div className='flex gap-4 px-6 text-xs mx-auto h-[calc(100vh-6rem)]'>
-      <MovieBox />
-      <WatchBox watched={watched} />
+      {children}
     </div>
   )
 }
 
-function MovieBox() {
-  const [movies, setMovies] = useState(tempMovieData)
-  const [isOpen1, setIsOpen1] = useState(false)
+function Box({ children }) {
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className='bg-background-500 rounded-md relative w-[25rem]'>
-      <button className='absolute right-2 top-2 w-6 h-6 rounded-full bg-[#212529] pb-1 text-[1.4rem]'
-        onClick={() => setIsOpen1(open => !open)}>
-        {isOpen1 ? '-' : '+'}
+      <button className='flex justify-center items-center pb-1 absolute right-2 top-2 w-6 h-6 rounded-full bg-[#212529] text-[1.4rem]'
+        onClick={() => setIsOpen(open => !open)}>
+        {isOpen ? '-' : '+'}
       </button>
-      {isOpen1 && <MovieList movies={movies} />}
+      {isOpen && children}
     </div>
   )
 }
@@ -145,24 +154,6 @@ function Movie({ movie }) {
         </p>
       </div>
     </li>
-  )
-}
-
-function WatchBox() {
-  const [isOpen2, setIsOpen2] = useState(false)
-  const [watched, setWatched] = useState(tempWatchedData)
-
-  return (
-    <div className='bg-background-500 rounded-md relative w-[25rem]'>
-      <button className='absolute right-2 top-2 w-6 h-6 rounded-full bg-[#212529] pb-1 text-[1.4rem]'
-        onClick={() => setIsOpen2(open => !open)}>
-        {isOpen2 ? '-' : '+'}
-      </button>
-      {isOpen2 && <>
-        <Summery watched={watched} />
-        <WatchList watched={watched} />
-      </>}
-    </div>
   )
 }
 
