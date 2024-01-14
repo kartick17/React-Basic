@@ -1,4 +1,15 @@
 import { useState } from "react"
+import PropTypes from 'prop-types'
+
+StarRating.propTypes = {
+  maxRating: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  defaultRating: PropTypes.number,
+  message: PropTypes.array,
+  className: PropTypes.string,
+  onSetRating: PropTypes.func
+}
 
 export default function StarRating({
   maxRating = 10,
