@@ -30,7 +30,7 @@ export default function StarRating({
 
   function handleRating(rating) {
     setRating(rating)
-    // onSetRating(rating)      // For set value external component
+    // onSetRating(rating)      // For set value external/parent component's state
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 
 const tempMovieData = [
@@ -48,12 +48,26 @@ const tempWatchedData = [
   },
 ];
 
+const API_KEY = 'e250f78f'
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 function App() {
   const [movies, setMovies] = useState(tempMovieData)
   const [watched, setWatched] = useState(tempWatchedData)
+  const query = 'Ben-hur'
+
+  useEffect(function () {
+    async function fetchMovies() {
+      const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`)
+      const data = await res.json()
+
+      setMovies(data.Search)
+    }
+
+    fetchMovies()
+  })
 
   return (
     <div className='flex flex-col gap-4'>
@@ -113,7 +127,7 @@ function NumResult({ movies }) {
 
 function Main({ children }) {
   return (
-    <div className='flex gap-4 px-6 text-xs mx-auto h-[calc(100vh-6rem)]'>
+    <div className='flex gap-4 px-6 text-xs mx-auto min-h-[calc(100vh-6rem)] '>
       {children}
     </div>
   )
