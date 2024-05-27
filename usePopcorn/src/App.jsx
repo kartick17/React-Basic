@@ -62,6 +62,7 @@ function App() {
     async function fetchMovies() {
       const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`)
       const data = await res.json()
+      console.log(data)
 
       setMovies(data.Search)
     }
@@ -161,7 +162,7 @@ function Movie({ movie }) {
     <li className='flex items-center px-6 py-3 gap-4 border-b border-background-100'>
       <img src={movie.Poster} alt={`${movie.Title} poster`} className='h-10 w-7' />
       <div>
-        <h3 className='font-semibold text-sm'>Inception</h3>
+        <h3 className='font-semibold text-sm'>{movie.Title}</h3>
         <p>
           <span className='text-xs mr-2'>🗓</span>
           <span className='text-sm'>2010</span>
