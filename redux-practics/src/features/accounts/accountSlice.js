@@ -4,7 +4,7 @@ const initialStateAccount = {
   loanPurpose: '',
 }
 
-export default accountReducer = (state = initialStateAccount, action) => {
+const accountReducer = (state = initialStateAccount, action) => {
   switch (action.type) {
     case 'account/deposit':
       return { ...state, balance: state.balance + action.payload }
@@ -35,7 +35,7 @@ export default accountReducer = (state = initialStateAccount, action) => {
 }
 
 export function deposit(amount) {
-  return { type: 'account/deposite', payload: amount }
+  return { type: 'account/deposit', payload: amount }
 }
 
 export function withdraw(amount) {
@@ -52,3 +52,5 @@ export function requestLoan(amount, purpose) {
 export function payLoan() {
   return { type: 'account/payLoan' }
 }
+
+export default accountReducer

@@ -1,4 +1,6 @@
-const { createStore, combineReducers } = require('redux')
+import { createStore, combineReducers } from 'redux'
+import accountReducer from './features/accounts/accountSlice'
+import customerReducer from './features/customers/customerSlice'
 
 const rootReducer = combineReducers({
   account: accountReducer,
